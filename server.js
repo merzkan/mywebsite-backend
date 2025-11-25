@@ -1,25 +1,30 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const connectDB = require("./config/db"); // <-- Yeni dosyamızı çağırdık
+const connectDB = require("./config/db"); 
+const projectRoutes = require('./routes/projectRoutes');
+const blogRoutes = require('./routes/blogRoutes');
+const authRoutes = require('./routes/auth');
+const userRoute = require("./routes/user")
 
-// Ayarları yükle
 dotenv.config();
 
-// Veritabanına Bağlan (Fonksiyonu çalıştır)
 connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "https://merzkan.app"],
+  credentials: true
+}));
 app.use(express.json());
 
-// Test Rotası
-app.get("/", (req, res) => {
-  res.send("Backend çalışıyor!");
-});
+
+app.use('/api/projects', projectRoutes);
+app.use('/api/blogs', blogRoutes);
+app.use('/api/auth', authRoutes);
+app.use("/api/users", userRoute);
 
 app.listen(PORT, () => {
   console.log(`Sunucu ${PORT} portunda çalışıyor...`);

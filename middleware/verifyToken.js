@@ -1,0 +1,28 @@
+const jwt = require("jsonwebtoken");
+
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers.token; 
+  if (authHeader) {
+    const token = authHeader; 
+    jwt.verify(token, "d0c1f1922340ed58553027eec259b29f", (err, user) => {
+      if (err) res.status(403).json("Token geçersiz!");
+      
+      req.user = user; 
+      next(); 
+    });
+  } else {
+    return res.status(401).json("Giriş yapmalısınız (Token yok)!");
+  }
+};
+
+const verifyTokenAndAdmin = (req, res, next) => {
+  verifyToken(req, res, () => {
+    if (req.user.role === "admin") {
+      next();
+    } else {
+      res.status(403).json("Bunu yapmaya yetkiniz yok!"); 
+    }
+  });
+};
+
+module.exports = { verifyToken, verifyTokenAndAdmin };
