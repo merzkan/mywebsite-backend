@@ -29,8 +29,6 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
-
-    console.log("Gelen veri:", identifier); 
     const user = await User.findOne({ 
         $or: [
             { email: identifier }, 
