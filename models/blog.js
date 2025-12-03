@@ -12,7 +12,7 @@ const BlogSchema = mongoose.Schema(
     },
     coverImageUrl: { 
         type: String,
-        default: '/logo.WebP'
+        default: '/logo.png'
     },
     author: {
         name: { type: String, required: true },
