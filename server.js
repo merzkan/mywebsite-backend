@@ -33,7 +33,9 @@ app.use(
     max: 100, // 15 dk içinde max 100 istek
     standardHeaders: true,
     legacyHeaders: false,
+    validate: { xForwardedForHeader: false },
   })
+  
 );
 
 // CORS
