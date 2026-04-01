@@ -19,7 +19,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // 1. Güvenlik Middlewarleri
-
+app.set('trust proxy', 1);
 // Helmet – HTTP header güvenliği
 app.use(helmet());
 
